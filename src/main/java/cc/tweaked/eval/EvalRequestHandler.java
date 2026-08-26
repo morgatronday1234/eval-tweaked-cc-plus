@@ -67,8 +67,10 @@ public class EvalRequestHandler implements TracingHttpHandler.Handler {
 
         String luaCode = reqJson.optString("luaCode");
 
-        int termX = reqJson.optInt("termX", 51);
-        int termY = reqJson.optInt("termY", 19);
+        int termX = Math.abs(reqJson.optInt("termX", 51));
+        int termY = Math.abs(reqJson.optInt("termY", 19));
+        termX = (termX > 1500) ? 1500 : termX;
+        termY = (termY > 1500) ? 1500 : termY;
 
         Span child = TelemetryConfiguration.tracer().spanBuilder("computer")
             .setSpanKind(SpanKind.INTERNAL)
