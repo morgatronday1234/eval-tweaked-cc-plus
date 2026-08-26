@@ -26,6 +26,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
+import org.json.*;
+
 /**
  * Handles the main entrypoint.
  * <p>
@@ -61,6 +63,12 @@ public class EvalRequestHandler implements TracingHttpHandler.Handler {
     public void handle(TracingHttpHandler.Exchange exchange) throws IOException {
         Span span = Span.current();
         byte[] body = exchange.getRequestBody().readAllBytes();
+        JSONObject reqJson = new JSONObject(new String(body)); //Fuck'n now with json!
+
+        String luaCode = reqJson.optString("luaCode");
+
+        int termX = reqJson.optInt("termX", 51);
+        int termY = reqJson.optInt("termY", 19);
 
         Span child = TelemetryConfiguration.tracer().spanBuilder("computer")
             .setSpanKind(SpanKind.INTERNAL)
@@ -69,7 +77,7 @@ public class EvalRequestHandler implements TracingHttpHandler.Handler {
         RunRequest request;
         try (Scope ignored = child.makeCurrent()) {
             LOG.info("Starting new computer");
-            request = new RunRequest(context.context(), body, (ok, image) -> executor.execute(() -> sendResponse(exchange, span, ok, image)));
+            request = new RunRequest(context.context(), luaCode.getBytes(), (ok, image) -> executor.execute(() -> sendResponse(exchange, span, ok, image)), termX, termY);
         } catch (RuntimeException e) {
             LOG.error("Failed to create computer", e);
             span.setStatus(StatusCode.ERROR, e.getMessage());
