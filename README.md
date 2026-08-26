@@ -7,7 +7,7 @@ Take screenshots of ComputerCraft code
 
 ## Usage
 ```bash
-$ curl -d '{"luaCode":"print("hello world")", "termX": 51, "termY":19}' [url] | display
+$ curl -d '{"luaCode":"print("hello_world")", "termX": 51, "termY":19}' [url] | display
 ```
 
 ![A screenshot in ComputerCraft saying 'Just testing some code!'](docs/example.png)
