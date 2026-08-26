@@ -51,7 +51,7 @@ public class RunRequest implements ILuaAPI {
     private boolean sentScreenshot = false;
     private final ScreenshotConsumer consumer;
 
-    public RunRequest(ComputerContext computerContext, byte[] startup, ScreenshotConsumer consumer) throws IOException {
+    public RunRequest(ComputerContext computerContext, byte[] startup, ScreenshotConsumer consumer, int termX, int termY) throws IOException {
         this.context = Context.current();
         this.startup = startup;
         this.consumer = consumer;
@@ -59,7 +59,7 @@ public class RunRequest implements ILuaAPI {
         this.computer = new Computer(
             computerContext,
             new Environment(metrics),
-            new Terminal(51, 19, true),
+            new Terminal(termX, termY, true),
             0
         );
         computer.addApi(this);
