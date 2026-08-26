@@ -31,6 +31,7 @@ dependencies {
 
     implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("com.google.guava:guava:33.5.0-jre")
+    implementation("org.json:json:20260814")
 
     // Instrumentation
     val otVersion = "1.62.0"
