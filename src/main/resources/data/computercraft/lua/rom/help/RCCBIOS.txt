@@ -1,0 +1,1 @@
+This EMU uses a modifyed version of Reconnected:CC's BIOS, Which in-its self uses a modifyed version of Switchcraft's BIOS. Some stuff may break;\n Files marked as .disabled are stuff that was from the R:CC BIOS and is for the most part usesless unless you are playing on that server.
